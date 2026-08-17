@@ -46,7 +46,9 @@ Host 侧没有可订阅的提问/审批事件，所以感知必须在浏览器�
 1. 包已放到 `$DSH_HOME/profiles/node_modules/@dsharness/dsh-sound-notify`
 2. `profiles/web/cordis.patch.yml` 已注册行 `sound-notify`
 3. profile 的 `cordis.patch.yml` 通过 HMR 热重载；`client-modules` 服务会增量扫描新激活的 loader 条目并把 bundle 加入启动图（`window.__DSH_BOOT__`），bundle 由 `/plugins/<id>/client.js` 按请求从磁盘读取
-4. **刷新页面**即可生效；如果插件没出现，重启 web GUI 兜底
+4. **刷新页面**即可生效（客户端 bundle 走 HMR/按请求从磁盘读取）
+
+> ⚠️ **host 半代码变更需要重启 web 服务**（`dsh web`）：loader 通过 Node ESM 缓存模块，页面刷新不会重新加载 host 代码。典型症状：设置页可拖动但 `settings.yaml` 不出现 `sound-notify` 段 → 重启后再试。
 
 验证方式：设置 → 提示音 里用**试听**按钮调音效；在会话里让 agent 调用一次 `ask_user_question`（提问音），再触发一次审批/计划审阅（审批音），跑完一个任务（完成音）。
 
@@ -67,10 +69,10 @@ Host 侧没有可订阅的提问/审批事件，所以感知必须在浏览器�
 
 ## 打包分发（发给别人）
 
-本包声明了 `dsh.bundle`（自带 `cordis.patch.yml`），所以支持 DSH 官方推荐的**一条命令安装**。分发包用 `npm pack` 生成 tarball：
+本包声明了 `dsh.bundle`（自带 `cordis.patch.yml`），所以支持 DSH 官方推荐的**一条命令安装**。分发包用 `npm pack` 在插件源码目录（本仓库根目录）生成 tarball：
 
 ```powershell
-cd C:\dsharness\plugins\dsh-sound-notify
+cd <本仓库根目录>
 npm pack          # 生成 dsharness-dsh-sound-notify-0.1.0.tgz
 ```
 
