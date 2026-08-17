@@ -22,6 +22,8 @@ DSH web 插件：当 agent 向用户提问（`ask_user_question` / 计划审阅�
 └── lib/client.js      浏览器半：音效引擎 + 会话观察 + 设置页 UI
 ```
 
+> host 半声明 `inject: ["settings"]`：设置提供方是异步初始化的 Service，必须等它就绪再注册 namespace（直接 `ctx.get("settings")` 会竞态失败、静默跳过，导致设置无法保存）。
+
 **配置流（设置系统）**：
 
 ```
