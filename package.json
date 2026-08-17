@@ -1,0 +1,33 @@
+{
+  "name": "@dsharness/dsh-sound-notify",
+  "version": "0.1.0",
+  "description": "DSH web plugin: play a notification chime when the agent asks the user a question (ask_user_question / plan review) or requests approval (sandbox escalation, tool approval).",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": ">=3"
+  },
+  "license": "MIT"
+}

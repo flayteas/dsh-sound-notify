@@ -1,0 +1,9 @@
+# dependencies / build artifacts
+node_modules/
+dist/
+*.tgz
+
+# logs / os junk
+*.log
+.DS_Store
+Thumbs.db

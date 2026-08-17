@@ -1,0 +1,19 @@
+# Bundle patch layer for @dsharness/dsh-sound-notify.
+#
+# When this package is installed as a profile dependency that declares
+# `dsh.bundle` (see package.json), `dsh plugin --profile <name> add <package>`
+# automatically appends it to the profile's `dsh.profile.bundles` layer stack,
+# and this patch inserts the loader row on the next boot.
+#
+# The row carries no config: per-trigger sound presets and volumes live in the
+# "sound-notify" settings namespace (Settings > 提示音, persisted to
+# $DSH_HOME/settings.yaml). A `config` here would only seed defaults and must
+# match the package's Config schema.
+#
+# On a profile that already carries the row manually in its own
+# cordis.patch.yml, remove that row before installing this bundle (duplicate
+# entry id `sound-notify`).
+
+- insert:
+    - id: sound-notify
+      name: '@dsharness/dsh-sound-notify'
